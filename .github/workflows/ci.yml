@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check .
+      - name: Format check
+        run: ruff format --check .
+      - name: Tests
+        # No GEMINI_API_KEY here on purpose: the suite must pass without an AI provider.
+        run: pytest
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t promise-tracker:ci .
+      - name: Smoke test the container
+        run: |
+          docker run -d --name pt -p 8000:8000 -e EXTRACTOR=rules promise-tracker:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:8000/healthz; then ok=1; break; fi
+            sleep 1
+          done
+          test "$ok" = "1"
+          curl -fsS http://localhost:8000/ > /dev/null
+          docker rm -f pt

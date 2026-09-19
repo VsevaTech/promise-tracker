@@ -1,0 +1,11 @@
+services:
+  promise-tracker:
+    build: .
+    image: promise-tracker:latest
+    ports:
+      - "8000:8000"
+    # Optional: the app runs on the rule-based extractor when no .env is present.
+    env_file:
+      - path: .env
+        required: false
+    restart: unless-stopped
