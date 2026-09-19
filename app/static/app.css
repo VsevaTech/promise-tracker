@@ -1,0 +1,80 @@
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #16191d;
+  --muted: #666f7a;
+  --line: #e2e6ea;
+  --accent: #1f6feb;
+  --ok-bg: #e7f6ec; --ok-ink: #14663a;
+  --warn-bg: #fdf3e0; --warn-ink: #8a5a06;
+  --err-bg: #fdecec; --err-ink: #9b1c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101317; --panel: #171b21; --ink: #e9edf2; --muted: #98a2ae;
+    --line: #262c34; --accent: #6ea8ff;
+    --ok-bg: #12331f; --ok-ink: #7ee2a8;
+    --warn-bg: #3a2c11; --warn-ink: #f0c274;
+    --err-bg: #3a1a1a; --err-ink: #f2a0a0;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+.site-header { padding: 28px 0 8px; }
+.site-header h1 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
+.tagline { margin: 4px 0 0; color: var(--muted); }
+.card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 20px; margin: 20px 0;
+}
+label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+textarea, input[type=text], input[type=date], input[type=time], input[type=file] {
+  width: 100%; padding: 9px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--ink); font: inherit;
+}
+textarea { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; resize: vertical; }
+small { color: var(--muted); font-size: 12px; }
+.row { display: flex; gap: 16px; margin-top: 14px; flex-wrap: wrap; }
+.row .field { flex: 1 1 240px; }
+.actions { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+button.primary {
+  background: var(--accent); color: #fff; border: 0; border-radius: 8px;
+  padding: 10px 16px; font-weight: 600; cursor: pointer;
+}
+button.primary:hover { filter: brightness(1.08); }
+.engine { font-size: 12px; color: var(--muted); margin-left: auto; }
+.engine.on { color: var(--ok-ink); }
+.htmx-indicator { opacity: 0; transition: opacity .2s; color: var(--muted); font-size: 13px; }
+.htmx-request .htmx-indicator, .htmx-request.htmx-indicator { opacity: 1; }
+.summary { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.engine-note { margin-left: auto; font-size: 12px; color: var(--muted); }
+.ok-chip, .warn-chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; }
+.ok-chip { background: var(--ok-bg); color: var(--ok-ink); }
+.warn-chip { background: var(--warn-bg); color: var(--warn-ink); }
+.notice { background: var(--warn-bg); color: var(--warn-ink); padding: 8px 12px; border-radius: 8px; font-size: 13px; }
+.error { background: var(--err-bg); color: var(--err-ink); }
+.empty { color: var(--muted); }
+.commitments { list-style: none; padding: 0; margin: 16px 0 0; }
+.commitment { border: 1px solid var(--line); border-left: 3px solid var(--ok-ink); border-radius: 10px; padding: 14px; margin-bottom: 14px; }
+.commitment.unresolved { border-left-color: var(--warn-ink); }
+.commitment-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.include { display: flex; align-items: center; gap: 6px; font-size: 13px; margin: 0; }
+.include input { width: auto; }
+.badge { font-size: 12px; padding: 3px 9px; border-radius: 999px; margin-left: auto; font-weight: 600; }
+.badge.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.badge.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.grid .wide { grid-column: span 4; }
+.grid label { font-weight: 500; color: var(--muted); }
+blockquote {
+  margin: 12px 0 0; padding: 10px 12px; background: var(--bg);
+  border-radius: 8px; font-size: 13px; color: var(--muted);
+}
+.expr { display: block; margin-top: 6px; font-size: 12px; }
+.why { font-size: 12px; color: var(--warn-ink); margin: 8px 0 0; }
+.site-footer { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; padding: 24px 16px 40px; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 640px) { .grid { grid-template-columns: 1fr 1fr; } .grid .wide { grid-column: span 2; } }
