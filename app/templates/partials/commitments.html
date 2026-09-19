@@ -1,0 +1,63 @@
+<div class="card">
+  <div class="summary">
+    <strong>{{ report.commitments|length }}</strong> commitment(s) in
+    {{ report.messages|length }} message(s) ·
+    <span class="ok-chip">{{ report.resolved_count }} dated</span>
+    <span class="warn-chip">{{ report.needs_confirmation_count }} need confirmation</span>
+    <span class="engine-note">engine: {{ report.engine }}</span>
+  </div>
+  {% if report.notice %}<p class="notice">{{ report.notice }}</p>{% endif %}
+
+  {% if not report.commitments %}
+    <p class="empty">No commitments found. Promises are statements like “отправлю договор завтра”,
+    not questions or plans.</p>
+  {% else %}
+  <form method="post" action="/export.ics">
+    <ol class="commitments">
+      {% for c in report.commitments %}
+      <li class="commitment {{ 'unresolved' if c.needs_confirmation else 'resolved' }}">
+        <input type="hidden" name="id" value="{{ c.id }}">
+        <input type="hidden" name="source_quote" value="{{ c.source_quote }}">
+        <input type="hidden" name="due_expression" value="{{ c.due_expression or '' }}">
+        <input type="hidden" name="anchor" value="{{ c.anchor.isoformat() if c.anchor else '' }}">
+
+        <div class="commitment-head">
+          <label class="include">
+            <input type="checkbox" name="include" value="{{ c.id }}"
+                   {% if not c.needs_confirmation %}checked{% endif %}>
+            <span>include</span>
+          </label>
+          {% if c.needs_confirmation %}
+            <span class="badge warn" title="{{ c.reason_text }}">Needs confirmation</span>
+          {% else %}
+            <span class="badge ok">{{ c.due_date }}{% if c.due_time %} {{ c.due_time.strftime('%H:%M') }}{% endif %}</span>
+          {% endif %}
+        </div>
+
+        <div class="grid">
+          <div class="field"><label>Who</label>
+            <input type="text" name="speaker" value="{{ c.speaker }}"></div>
+          <div class="field"><label>To whom</label>
+            <input type="text" name="recipient" value="{{ c.recipient or '' }}"></div>
+          <div class="field wide"><label>What</label>
+            <input type="text" name="what" value="{{ c.what }}"></div>
+          <div class="field"><label>Due date</label>
+            <input type="date" name="due_date" value="{{ c.due_date.isoformat() if c.due_date else '' }}"></div>
+          <div class="field"><label>Time</label>
+            <input type="time" name="due_time" value="{{ c.due_time.strftime('%H:%M') if c.due_time else '' }}"></div>
+        </div>
+
+        <blockquote>“{{ c.source_quote }}”
+          {% if c.due_expression %}<span class="expr">deadline wording: “{{ c.due_expression }}”</span>{% endif %}
+        </blockquote>
+        {% if c.needs_confirmation %}<p class="why">{{ c.reason_text }} Fill the date in yourself to export it.</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+    <div class="actions">
+      <button type="submit" class="primary">Download .ics</button>
+      <small>Only checked commitments with a date are exported.</small>
+    </div>
+  </form>
+  {% endif %}
+</div>

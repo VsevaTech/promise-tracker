@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+  <form id="extract-form"
+        hx-post="/extract"
+        hx-target="#results"
+        hx-encoding="multipart/form-data"
+        hx-indicator="#spinner">
+    <label for="conversation">Conversation</label>
+    <textarea id="conversation" name="conversation" rows="14"
+              placeholder="[2026-09-14 10:32] Anna Petrova: Когда будет договор?&#10;[2026-09-14 10:40] Sergey Orlov: Отправлю договор завтра до 18:00."></textarea>
+
+    <div class="row">
+      <div class="field">
+        <label for="file">…or upload a .txt export</label>
+        <input type="file" id="file" name="file" accept=".txt,text/plain">
+      </div>
+      <div class="field">
+        <label for="reference_date">Reference date</label>
+        <input type="date" id="reference_date" name="reference_date" value="{{ today }}">
+        <small>Used for messages that carry no timestamp of their own.</small>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="primary">Extract promises</button>
+      <span id="spinner" class="htmx-indicator">Extracting…</span>
+      <span class="engine {{ 'on' if ai_enabled else 'off' }}">
+        {{ "AI extraction: Gemini" if ai_enabled else "AI extraction: off — rule-based fallback" }}
+      </span>
+    </div>
+  </form>
+</section>
+
+<section id="results"></section>
+{% endblock %}

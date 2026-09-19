@@ -1,0 +1,11 @@
+[2026-09-14 09:12] Dana Whitfield: Morning — any news on the revised quote?
+[2026-09-14 09:20] Marcus Lee: Morning! Pricing is almost final.
+[2026-09-14 09:24] Dana Whitfield: Our finance team needs it for the board pack.
+[2026-09-14 09:27] Marcus Lee: Understood. I will send the revised quote by Friday.
+[2026-09-14 09:31] Dana Whitfield: Great. What about the security questionnaire?
+[2026-09-14 09:36] Marcus Lee: We'll return the completed questionnaire on 25 September.
+[2026-09-14 09:40] Dana Whitfield: Perfect, that works with our review cycle.
+[2026-09-14 09:44] Priya Nair: Jumping in — is the staging environment still down?
+[2026-09-14 09:47] Marcus Lee: It is, the provider is investigating. No ETA from them yet.
+[2026-09-14 09:52] Priya Nair: Can you keep us posted?
+[2026-09-14 09:55] Marcus Lee: Of course, though I can't promise a fix date today.

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Promise Tracker{% endblock %}</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Promise&nbsp;Tracker</h1>
+      <p class="tagline">Commitments out of a conversation — with the quote that proves them.</p>
+    </div>
+  </header>
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="wrap site-footer">
+    <span>v{{ version if version else "" }}</span>
+    <span>Nothing is stored: the conversation lives only in this request.</span>
+  </footer>
+</body>
+</html>
